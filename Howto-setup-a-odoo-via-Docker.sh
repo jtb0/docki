@@ -99,7 +99,7 @@ startinstall()
     sudo ./install
     sudo apt install docker-compose
     rm docker-compose.yml
-    wget https://github.com/jtb0/docki/blob/master/odoo2/docker-compose.yml
+    wget https://raw.githubusercontent.com/jtb0/docki/master/odoo2/docker-compose.yml
 
 if $DIALOG; then
     dialog --backtitle odoo-Installer --title "" --yesno "Jetzt muss noch ein Eintrag in der 
