@@ -19,11 +19,12 @@
     env_file:
       - ./.env
   app:
-    image: odoo
+    image: odoo:8
     links:
       - db
     volumes:
       - ./odoo:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
   web:
     image: nginx
     volumes:
