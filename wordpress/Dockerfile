@@ -22,3 +22,7 @@ ADD ./kallyas.zip /usr/src/wordpress/wp-content/themes/
 RUN cd /usr/src/wordpress/wp-content/themes/ \
     && unzip kallyas.zip \
     && rm kallyas.zip
+
+ADD ./functions.addition /usr/src/wordpress/wp-content/themes/kallyas/
+RUN cd /usr/src/wordpress/wp-content/themes/kallyas/ \
+    && cat functions.addition >> functions.php
