@@ -1,5 +1,5 @@
-// Wird benötigt, damit der Warenkorb auch im Kaufprozess angezeit wird.
-add_filter( &#039;woocommerce_widget_cart_is_hidden&#039;, &#039;always_show_cart&#039;, 40, 0 );
+// wird benötigt, damit das Menü den Einkaufskorb auch während dem Bezahlvorgang anzeigt
+add_filter( 'woocommerce_widget_cart_is_hidden', 'always_show_cart', 40, 0 );
 function always_show_cart() {
     return false;
 }
