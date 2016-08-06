@@ -4,25 +4,31 @@ ENV WOOCOMMERCE_VERSION 2.6.4
 ENV WOOCOMMERCE_UPSTREAM_VERSION 2.6.4
 ENV WOOCOMMERCE_GERMANIZED_VERSION 1.6.8
 ENV MAX_MEGA_MENU_VERSION 2.2.2
-
+ENV ALL_IN_ONE_WP_MIGRATION_VERSION 5.47
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends unzip wget
 
-RUN wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O /tmp/temp.zip \
+RUN mkdir /temp
+RUN wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O /temp/temp.zip \
     && cd /usr/src/wordpress/wp-content/plugins \
-    && unzip /tmp/temp.zip \
-    && rm /tmp/temp.zip
+    && unzip /temp/temp.zip \
+    && rm /temp/temp.zip
 
-RUN wget https://downloads.wordpress.org/plugin/woocommerce-germanized.${WOOCOMMERCE_GERMANIZED_VERSION}.zip -O /tmp/temp.zip \
+RUN wget https://downloads.wordpress.org/plugin/woocommerce-germanized.${WOOCOMMERCE_GERMANIZED_VERSION}.zip -O /temp/temp.zip \
     && cd /usr/src/wordpress/wp-content/plugins \
-    && unzip /tmp/temp.zip \
-    && rm /tmp/temp.zip
+    && unzip /temp/temp.zip \
+    && rm /temp/temp.zip
 
-RUN wget https://downloads.wordpress.org/plugin/megamenu.${MAX_MEGA_MENU_VERSION}.zip -O /tmp/temp.zip \
+RUN wget https://downloads.wordpress.org/plugin/megamenu.${MAX_MEGA_MENU_VERSION}.zip -O /temp/temp.zip \
     && cd /usr/src/wordpress/wp-content/plugins \
-    && unzip /tmp/temp.zip \
-    && rm /tmp/temp.zip
+    && unzip /temp/temp.zip \
+    && rm /temp/temp.zip
+
+RUN wget https://downloads.wordpress.org/plugin/all-in-one-wp-migration.${ALL_IN_ONE_WP_MIGRATION_VERSION}.zip -O /temp/temp.zip \
+    && cd /usr/src/wordpress/wp-content/plugins \
+    && unzip /temp/temp.zip \
+    && rm /temp/temp.zip
 
 ADD ./kallyas.zip /usr/src/wordpress/wp-content/themes/
 RUN cd /usr/src/wordpress/wp-content/themes/ \
