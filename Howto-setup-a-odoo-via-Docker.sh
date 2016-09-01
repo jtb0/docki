@@ -97,6 +97,7 @@ startinstall()
     git clone https://github.com/indiehosters/odoo.git
     cd odoo
     sudo ./install
+    sudo apt install docker
     sudo apt install docker-compose
     rm docker-compose.yml
     wget https://raw.githubusercontent.com/jtb0/docki/master/odoo2/docker-compose.yml
