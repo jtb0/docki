@@ -1,17 +1,3 @@
-#version: "2"
-#services:
-#  wordpress:
-#    image: wordpress
-#    ports:
-#      - 8080:80
-#    environment:
-#      - WORDPRESS_DB_PASSWORD=example
-#      - VIRTUAL_HOST=wp.docki
-#      - VIRTUAL_PORT="8080"
-#  mysql:
-#    image: mariadb
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=example
   db:
     image: postgres
     volumes:
@@ -19,7 +5,8 @@
     env_file:
       - ./.env
   app:
-    image: odoo:8
+    #image: odoo:8
+    image: jtb0/myodoov8
     links:
       - db
     volumes:
