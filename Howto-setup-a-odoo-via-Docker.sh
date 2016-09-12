@@ -101,6 +101,8 @@ startinstall()
     sudo apt install docker-compose
     rm docker-compose.yml
     wget https://raw.githubusercontent.com/jtb0/docki/master/odoo2/docker-compose.yml
+    wget https://apps.odoo.com/loempia/download/woocommerceerpconnect/8.0.1.0/4njpKPBs9FfcFucuvgLHZQ.zip
+    sudo unzip 4njpKPBs9FfcFucuvgLHZQ.zip addons/
 
 if $DIALOG; then
     dialog --backtitle odoo-Installer --title "" --yesno "Jetzt muss noch ein Eintrag in der 
