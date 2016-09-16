@@ -8,7 +8,7 @@ $ ./Howto-setup-a-odoo-via-Docker.sh </br>
 then start the odoo container with </br>
 $ cd odoo </br>
 $ docker-compose up -d </br>
-now you can access your odoo via browser at url http://IP </br>
+now you can access your odoo via browser at url http://\<The IP of your Server\> </br>
 then start woocommerce </br>
 $ cd ../woocommerce </br>
 $ docker-compose up -d </br>
