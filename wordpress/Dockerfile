@@ -25,16 +25,19 @@ RUN wget https://downloads.wordpress.org/plugin/megamenu.${MAX_MEGA_MENU_VERSION
     && unzip /temp/temp.zip \
     && rm /temp/temp.zip
 
-RUN wget https://downloads.wordpress.org/plugin/all-in-one-wp-migration.${ALL_IN_ONE_WP_MIGRATION_VERSION}.zip -O /temp/temp.zip \
-    && cd /usr/src/wordpress/wp-content/plugins \
-    && unzip /temp/temp.zip \
-    && rm /temp/temp.zip
+# This plugin needs to be installed using the webinterface
+#RUN wget https://downloads.wordpress.org/plugin/all-in-one-wp-migration.${ALL_IN_ONE_WP_MIGRATION_VERSION}.zip -O /temp/temp.zip \
+#    && cd /usr/src/wordpress/wp-content/plugins \
+#    && unzip /temp/temp.zip \
+#    && rm /temp/temp.zip
 
-ADD ./kallyas.zip /usr/src/wordpress/wp-content/themes/
-RUN cd /usr/src/wordpress/wp-content/themes/ \
-    && unzip kallyas.zip \
-    && rm kallyas.zip
+# To use the kallyas theme provided by a zip-file 
+#ADD ./kallyas.zip /usr/src/wordpress/wp-content/themes/
+#RUN cd /usr/src/wordpress/wp-content/themes/ \
+#    && unzip kallyas.zip \
+#    && rm kallyas.zip
 
-ADD ./functions.addition /usr/src/wordpress/wp-content/themes/kallyas/
-RUN cd /usr/src/wordpress/wp-content/themes/kallyas/ \
-    && cat functions.addition >> functions.php
+# To activate the theme
+#ADD ./functions.addition /usr/src/wordpress/wp-content/themes/kallyas/
+#RUN cd /usr/src/wordpress/wp-content/themes/kallyas/ \
+#    && cat functions.addition >> functions.php
