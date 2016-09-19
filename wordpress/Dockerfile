@@ -1,5 +1,6 @@
 FROM wordpress:latest
 
+ENV CONNECTOR_WOO_ODOO 2.4.8
 ENV WOOCOMMERCE_VERSION 2.6.4
 ENV WOOCOMMERCE_UPSTREAM_VERSION 2.6.4
 ENV WOOCOMMERCE_GERMANIZED_VERSION 1.7.1
@@ -10,6 +11,12 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends unzip wget
 
 RUN mkdir /temp
+
+RUN wget https://downloads.wordpress.org/plugin/connector-woo-odoo.${CONNECTOR_WOO_ODOO}.zip -O /temp/temp.zip \
+    && cd /usr/src/wordpress/wp-content/plugins \
+    && unzip /temp/temp.zip \
+    && rm /temp/temp.zip
+
 RUN wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O /temp/temp.zip \
     && cd /usr/src/wordpress/wp-content/plugins \
     && unzip /temp/temp.zip \
