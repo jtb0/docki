@@ -5,23 +5,23 @@ COLUMNS=80
 LINES=24
 
 # Fragen, ob im Dialogmodus laufen soll, wenn ja, prüfen ob dialog installiert ist.
-read -p "Möchten Sie die Konfiguration mit einem (D)ialog durchführen, (A)utomatisch, oder (B)eenden:" auswahl
-if [ $auswahl = "D" ]; then
+read -p "Do you want to use a (d)ialog for configuration, install it (a)utomated, or (q)uit:" auswahl
+if [ $auswahl = "d" ]; then
   if [ -n "`which dialog 2>/dev/null`" ]; then
     Dialog="`which dialog`"
     DialogRedirect="2>~/.termine.in"
     DIALOG=true
   else
-    echo "Da dialog nicht installiert ist,"
-    echo "läuft dieses skript nicht im interaktiven Modus."
-    read -p "Soll das skript automatisch ausgeführt werden (j/N):" weiter
-    if [ $weiter = "j" ]; then
+    echo "dialog is not installed,"
+    echo "because of this there is no interactive mode available."
+    read -p "Soll das skript automatisch ausgeführt werden (y/N):" weiter
+    if [ $weiter = "y" ]; then
       DIALOG=false
     else
       exit 1
     fi
   fi
-elif [ $auswahl = "A" ]; then
+elif [ $auswahl = "a" ]; then
   DIALOG=false
 else
   exit 0
@@ -29,14 +29,14 @@ fi
 
 ###################################################################
 #                                                                 #
-#                     test auf root Rechte                        #
+#             test if this script is startet as root              #
 #                                                                 #
 ###################################################################
 roottest(){
 if [[ $EUID -ne 0 ]]; then
-   echo "Skript wird als User: $USER ausgeführt"
+   echo "Script is started as: $USER"
 else
-   echo "Dieses Skript darf nicht als root ausgeführt werden" 1>&2
+   echo "It is not allowed to start this as root" 1>&2
    exit 1
 fi
 }
@@ -44,34 +44,34 @@ fi
 
 ###################################################################
 #                                                                 #
-#                         Begrüßung                               #
+#                           Welcome                               #
 #                                                                 #
 ###################################################################
 welcome()
 {
 if $DIALOG; then
-  dialog --backtitle odoo-Installer --title "Odoo Installer" --yesno "Herzlich willkommen im Installer.
+  dialog --backtitle odoo-Installer --title "Odoo Installer" --yesno "Welcome.
  
 
-  Dieses Skript installiert nun 3 Docker Images.
+  This program will install the following 3 Docker Images.
 
-     1. Postgresql als Datenbank
+     1. Postgresql for database
      2. Odoo 
-     3. nginx als Application Server
+     3. nginx for application server
  
-  Soll nun Odoo mittels Docker-Images installiert werden?" $LINES $COLUMNS #15 60
+  Do you want to install these docker-images?" $LINES $COLUMNS #15 60
 
   antwort=${?}
 
   if [ "$antwort" -eq "255" ]
     then
-      echo "Abgebrochen"
+      echo "Cancelled by user"
       exit 255
   fi
   
   if [ "$antwort" -eq "1" ]
     then
-      dialog --backtitle odoo-Installer --title "Auf Wiedersehen" --msgbox "Na dann nix wie weg" $LINES $COLUMNS
+      dialog --backtitle odoo-Installer --title "Bye" --msgbox "Bye" $LINES $COLUMNS
       exit 1
   fi
   
@@ -88,7 +88,7 @@ fi
 
 ###################################################################
 #                                                                 #
-#                     Installationsstart                          #
+#                     Start installation                          #
 #                                                                 #
 ###################################################################
 
@@ -100,110 +100,28 @@ startinstall()
     sudo apt install docker
     sudo apt install docker-compose
     rm docker-compose.yml
-    wget https://raw.githubusercontent.com/jtb0/docki/master/odoo2/docker-compose.yml
     wget https://apps.odoo.com/loempia/download/connector_woocommerce/8.0.1.0.1/5X67fKLxEBADalRAktjsZw.zip?deps
     sudo unzip 5X67fKLxEBADalRAktjsZw.zip?deps -d addons/
     wget https://apps.odoo.com/loempia/download/project_scrum/8.0.1.6/3JVTauxFQf9XkYl3bcHIdh.zip?deps
     sudo unzip 3JVTauxFQf9XkYl3bcHIdh.zip?deps -d addons/
-
-if $DIALOG; then
-    dialog --backtitle odoo-Installer --title "" --yesno "Jetzt muss noch ein Eintrag in der 
-in der 'docker-compose.yml' erfolgen. Hier muss im Abschnitt 'web' noch eine Konfiguration der Ports erfolgen.
-
-Somit ist der Service dann auch direkt unter 'http://<ip-adresse>/' erreichbar und es ist nicht notwendig die IP des Dockercontainers zu verwenden.
-Daher bitte folgendes eintragen:
-
-	ports:
-    	- \"80:80\"
-
-Möchten Sie diese Anpassung jetzt mit dem Editor 'vim' vornehmen?:
-" $LINES $COLUMNS
-  antwort=${?}
-
-  if [ "$antwort" -eq "255" ]
-    then
-      echo "Abgebrochen"
-      exit 255
-  fi
-
-  if [ "$antwort" -eq "1" ]
-    then
-      dialog --backtitle odoo-Installer --title "" --yesno "Soll ohne Anpassung weiter gemacht werden?" $LINES $COLUMNS
-      weiter_ohne_anpassung=${?}
-
-      if [ "$weiter_ohne_anpassung" -eq "255" ]
-        then
-          echo "Abgebrochen"
-          exit 255
-      fi
-      
-      if [ "$weiter_ohne_anpassung" -eq "1" ]
-        then
-          dialog --backtitle odoo-Installer --title "Auf Wiedersehen" --msgbox "Na dann nix wie weg" $LINES $COLUMNS
-	  exit 1
-      fi
-
-      if [ "$weiter_ohne_anpassung" -eq "0" ]
-        then
-	  echo "Weiter ohne Anpassung der Ports in der Datei docker-compose.yml"
-      fi
-    fi
-
-  if [ "$antwort" -eq "0" ]
-    then
-      vim docker-compose.yml
-  fi
-else
-  echo " Bitte folgendes unter web anhängen:"
-  echo "      ports:"
-  echo "        - \"80:80\""
-  read -p "Möchten Sie diese Anpassung jetzt mit dem Editor 'vim' vornehmen? (j/n):" weiter
-
-  if [ $weiter = "j" ]; then
-    vim docker-compose.yml
-  fi
-fi
 }
 
 
 ###################################################################
 #                                                                 #
-#                       Service starten                           #
+#                       Start Service                             #
 #                                                                 #
 ###################################################################
 
 startservice()
 {
-docker-compose up
+    cd ..	
+    docker-compose up
 }
-
-
-
-## Alt und kann weg -----------------------------------------------
-# Make sure only root can run our script
-#if [ "$(id -u)" = "0" ]; then
-#   echo "Dieses Skript darf nicht als root ausgeführt werden" 1>&2
-#   exit 1
-#fi
-#if [ "$USER" = "root" ]; then
-#   echo "Bitte nicht als user 'root' ausführen"
-#   exit 1
-#fi
-#------------------------------------------------------------------
-
-#git clone https://github.com/indiehosters/odoo.git
-#cd odoo
-#sudo ./install
-#sudo apt install docker-compose
-
-#vim docker-compose.yml
-
-#docker-compose up
-
 
 ###################################################################
 #                                                                 #
-#                         Hauptmenü                               #
+#                         Mainmenue                               #
 #                                                                 #
 ###################################################################
 
