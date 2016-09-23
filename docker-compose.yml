@@ -3,15 +3,15 @@
     volumes:
       - ./data:/var/lib/postgresql/data
     env_file:
-      - ./.env
+      - ./odoo/.env
   odoo:
     #image: odoo:8
     image: jtb0/myodoov8
     links:
       - db
     volumes:
-      - ./odoo:/var/lib/odoo
-      - ./addons:/mnt/extra-addons
+      - ./odoo/odoo:/var/lib/odoo
+      - ./odoo/addons:/mnt/extra-addons
     environment:
       - VIRTUAL_HOST=odoo.docki
       - VIRTUAL_PORT=8069
