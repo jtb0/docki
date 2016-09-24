@@ -17,11 +17,9 @@ now you can choose "a" for a automatic installation.
 After this the container will start and you can have a look if everything is working. To have a look the instances are not startetd in deamon mode, so you see the commandline logs.
 
 ## Access your Applications (Odoo and Woocommerce)
-Go with your broser to 
-    
-    http://odoo.<YOUR_HOSTNAME> and http://wp.<YOUR_HOSTNAME>.
+Go with your broser to `http://odoo.<YOUR_HOSTNAME>` and `http://wp.<YOUR_HOSTNAME>`.
 
-For example http://odoo.docki
+For example `http://odoo.docki`
 
 ## Stop your Instances at the first time
 You can stop the containers by typing Ctrl+C at the terminal
