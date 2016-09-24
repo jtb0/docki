@@ -14,17 +14,27 @@ then start the installation of docker and docker-compose and the odoo v8 docker 
     
 now you can choose "a" for a automatic installation.
 
-Afterwords, you can choose j (yes) or n (no) if you would like to edit the docker-compose-file with the vim-editor.
+After this the container will start and you can have a look if everything is working. To have a look the instances are not startetd in deamon mode, so you see the commandline logs.
 
-After this the container will start and you can have a look if everything is working. Then you can stop the containers by typing Ctrl+C.
+## Access your Applications (Odoo and Woocommerce)
+Go with your broser to http://odoo.<yourhostname> and http://wp.<yourhostname>.
+For example http://odoo.docki
 
-To restart the odoo containers in deamon mode type </br>
+## Stop your Instances at the first time
+You can stop the containers by typing Ctrl+C at the terminal
 
-    $ cd odoo
+## Start the containers
+To start the odoo, wordpress and the nginx-proxy containers in deamon mode type
+
     $ docker-compose up -d
     
-now you can access your odoo via browser at url http://\<The IP of your Server\>
-then start woocommerce
+## Start and stop a single allpication 
+To start and stop only one container you can use this for example with nginx-proxy:
 
-    $ cd ../woocommerce
-    $ docker-compose up -d
+    $ docker-compose up -d nginx-proxy
+    $ docker-compose stop nginx-proxy
+    
+or this for example to start and stop odoo
+
+    $ docker-compose up -d odoo
+    $ docker-compose stop odoo
