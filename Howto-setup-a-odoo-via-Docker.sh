@@ -94,6 +94,7 @@ fi
 
 startinstall()
 {
+    echo $HOSTNAME > .env
     git clone https://github.com/indiehosters/odoo.git
     cd odoo
     sudo ./install
@@ -106,7 +107,6 @@ startinstall()
     wget https://apps.odoo.com/loempia/download/project_scrum/8.0.1.6/3JVTauxFQf9XkYl3bcHIdh.zip?deps
     sudo unzip 3JVTauxFQf9XkYl3bcHIdh.zip?deps -d addons/
     rm 3JVTauxFQf9XkYl3bcHIdh.zip?deps
-    echo $HOSTNAME > .env
 }
 
 
