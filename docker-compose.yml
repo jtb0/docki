@@ -42,4 +42,4 @@
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./nginx/conf/additional_proxy.conf:/etc/nginx/conf.d/additional_proxy.conf:ro
+      - ./nginx/conf/additional_parameter.conf:/etc/nginx/conf.d/additional_parameter.conf:ro
