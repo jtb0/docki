@@ -94,7 +94,8 @@ fi
 
 startinstall()
 {
-    echo $HOSTNAME > .env
+    echo "HOSTNAME="$HOSTNAME > .env
+    #echo $HOSTNAME > .env
     git clone https://github.com/indiehosters/odoo.git
     cd odoo
     sudo ./install
