@@ -101,6 +101,7 @@ startinstall()
     sudo ./install
     sudo apt install docker
     sudo apt install docker-compose
+    sudo usermod -aG docker $(whoami)
     rm docker-compose.yml
     wget https://apps.odoo.com/loempia/download/connector_woocommerce/8.0.1.0.1/5X67fKLxEBADalRAktjsZw.zip?deps
     sudo unzip 5X67fKLxEBADalRAktjsZw.zip?deps -d addons/
