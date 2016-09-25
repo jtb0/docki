@@ -104,17 +104,8 @@ startinstall()
     sudo apt install docker-compose
     sudo apt-get install unzip
     
-    if [ groups | grep docker = "" ]; then
-      new_login_needed=true
-      echo "please logout and login again, that the changes can effect"
-    fi 
-    
-    if [new_login_needed = true]; then
-      sudo usermod -aG docker $(whoami)
-      exit
-    else
-      # need to login again so that the group add works
-      #sudo su $(whoami)
+    if id -nG "$USER" | grep -qw "docker"; then
+      echo "$USER is in group docker"
       rm docker-compose.yml
       wget https://apps.odoo.com/loempia/download/connector_woocommerce/8.0.1.0.1/5X67fKLxEBADalRAktjsZw.zip?deps
       sudo unzip 5X67fKLxEBADalRAktjsZw.zip?deps -d addons/
@@ -122,6 +113,10 @@ startinstall()
       wget https://apps.odoo.com/loempia/download/project_scrum/8.0.1.6/3JVTauxFQf9XkYl3bcHIdh.zip?deps
       sudo unzip 3JVTauxFQf9XkYl3bcHIdh.zip?deps -d addons/
       rm 3JVTauxFQf9XkYl3bcHIdh.zip?deps
+    else
+      sudo usermod -aG docker $(whoami)
+      echo "please logout and login again, that the changes can effect"
+      exit
     fi
 }
 
