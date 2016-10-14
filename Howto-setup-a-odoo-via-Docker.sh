@@ -103,6 +103,7 @@ startinstall()
     sudo apt install docker
     sudo apt install docker-compose
     sudo apt-get install unzip
+    sudo addgroup docker
     
     if id -nG "$USER" | grep -qw "docker"; then
       echo "$USER is in group docker"
