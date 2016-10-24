@@ -10,7 +10,9 @@ ENV ALL_IN_ONE_WP_MIGRATION_VERSION 5.51
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends unzip wget
 
-RUN echo extension=zip.so > /usr/local/etc/php/conf.d/php.ini
+RUN echo extension=zip.so >> /usr/local/etc/php/conf.d/php.ini
+RUN echo upload_max_filesize = 64M >> /usr/local/etc/php/conf.d/php.ini
+RUN echo post_max_size = 64M >> /usr/local/etc/php/conf.d/php.ini
 
 RUN pecl install zip
 RUN mkdir /temp
